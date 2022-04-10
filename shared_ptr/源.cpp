@@ -23,13 +23,13 @@ public:
 		}
 	}
 
-	shared_ptr(const shared_ptr& rhs) noexcept : ptr_{ rhs.ptr_ }, rep_{ rep_ } {
+	shared_ptr(const shared_ptr& rhs) noexcept : ptr_{ rhs.ptr_ }, rep_{ rhs.rep_ } {
 		if (rep_) {
 			rep_->inc_ref();
 		}
 	}
 
-	shared_ptr(shared_ptr&& rhs) noexcept : ptr_{ rhs.ptr_ }, rep_{ rep_ } {
+	shared_ptr(shared_ptr&& rhs) noexcept : ptr_{ rhs.ptr_ }, rep_{ rhs.rep_ } {
 		rhs.ptr_ = nullptr;
 		rhs.rep_ = nullptr;
 	}
