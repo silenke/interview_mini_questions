@@ -70,6 +70,8 @@ int main() {
 	Queue<int> q{ 10 };
 	std::thread t1(
 		[&] {
+			//using namespace std::literals;
+			//std::this_thread::sleep_for(1s);
 			for (int i = 0; i < 100; ) {
 				if (q.try_push(i)) {
 					i++;
