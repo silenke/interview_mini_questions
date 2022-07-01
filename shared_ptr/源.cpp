@@ -35,7 +35,7 @@ public:
 	}
 
 	~shared_ptr() noexcept {
-		if (rep_ && rep_->dec_ref()) {
+		if (rep_ && !rep_->dec_ref()) {
 			delete ptr_;
 			delete rep_;
 		}
@@ -90,7 +90,20 @@ auto make_shared(Args&&... args) {
 #include <iostream>
 int main() {
 
-	auto p = make_shared<std::string>("123");
-	auto p2 = p;
-	std::cout << *p << *p2;
+	auto print = [](auto& p) {
+		std::cout << p.use_count() << "\n";
+	};
+
+	auto p1 = make_shared<std::string>("123");
+	print(p1);
+	{
+		auto p2 = p1;
+		print(p2);
+	}
+	print(p1);
+	{
+		auto p3 = std::move(p1);
+		print(p3);
+	}
+	print(p1);
 }
